@@ -1,0 +1,42 @@
+---
+import { site } from '../data/site';
+
+// On the home page, links jump within the page ("#work").
+// On other pages (e.g. a case study) they go back to the home page ("/#work").
+const isHome = Astro.url.pathname === '/';
+const prefix = isHome ? '' : '/';
+
+const links = [
+  { href: `${prefix}#ask`, label: 'Ask me' },
+  { href: `${prefix}#work`, label: 'Work' },
+  { href: `${prefix}#about`, label: 'About' },
+  { href: `${prefix}#contact`, label: 'Contact' },
+];
+
+const linkClass = 'px-3.5 py-2.5 font-medium text-body no-underline hover:text-ink';
+---
+
+<header class="border-b border-line bg-white">
+  <nav
+    aria-label="Main"
+    class="mx-auto flex max-w-[1120px] flex-wrap items-center justify-between gap-4 px-6 py-[18px]"
+  >
+    <a
+      href={isHome ? '#top' : '/'}
+      class="font-heading text-xl font-bold text-ink no-underline hover:text-ink"
+    >
+      {site.name}
+    </a>
+    <div class="flex flex-wrap items-center gap-2">
+      {links.map((link) => (
+        <a href={link.href} class={linkClass}>{link.label}</a>
+      ))}
+      <a
+        href={site.cvPath}
+        class="rounded-lg bg-ink px-[18px] py-2.5 font-semibold text-white no-underline hover:bg-accent-dark hover:text-white"
+      >
+        Download CV
+      </a>
+    </div>
+  </nav>
+</header>
