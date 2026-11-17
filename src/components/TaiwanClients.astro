@@ -1,0 +1,38 @@
+---
+import { taiwanClients } from '../data/taiwan-clients';
+---
+
+<div class="flex flex-col gap-5 pt-6">
+  <div class="flex flex-col gap-2">
+    <h3 class="m-0 font-heading text-[26px]">Before New Zealand: 7 years in Taiwan</h3>
+    <p class="m-0 max-w-[720px] text-body">
+      Commercial websites and ongoing maintenance of live sites for brands in Taiwan, including:
+    </p>
+  </div>
+
+  <ul class="m-0 flex list-none flex-wrap gap-3 p-0">
+    {
+      taiwanClients.map((client) => (
+        <li class="flex min-w-0 flex-[1_1_300px]">
+          <a
+            href={client.url}
+            target="_blank"
+            rel="noopener"
+            class="flex w-full items-center justify-between gap-3 rounded-xl border border-line bg-white px-[22px] py-[18px] no-underline hover:border-line-strong"
+          >
+            <span class="flex flex-col">
+              <span class="font-semibold text-ink">{client.name}</span>
+              <span class="text-sm text-muted">
+                {client.type} · {client.domain}
+              </span>
+            </span>
+            <span aria-hidden="true" class="font-semibold">
+              ↗
+            </span>
+            <span class="sr-only">(opens in a new tab)</span>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</div>
