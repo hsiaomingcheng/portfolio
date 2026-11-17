@@ -1,0 +1,66 @@
+---
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+}
+
+const { project } = Astro.props;
+const { cardTitle, summary, category, tags, cover, coverAlt, highlights, hasCaseStudy } =
+  project.data;
+---
+
+<article class="flex flex-wrap overflow-hidden rounded-2xl border border-line bg-white">
+  <div class="min-h-[340px] flex-[1_1_440px] border-r border-line bg-line">
+    {
+      cover ? (
+        <Image
+          src={cover}
+          alt={coverAlt ?? ''}
+          width={880}
+          height={680}
+          class="size-full min-h-[340px] object-cover object-left-top"
+        />
+      ) : (
+        <div class="flex size-full min-h-[340px] items-center justify-center font-mono text-sm text-muted">
+          [Screenshot — new Frizzell homepage]
+        </div>
+      )
+    }
+  </div>
+
+  <div class="flex min-w-0 flex-[1_1_440px] flex-col gap-[18px] p-6 sm:p-10">
+    <div class="flex flex-wrap gap-2">
+      <span class="rounded-md bg-accent-soft px-2.5 py-1 text-[13px] font-medium text-accent-dark">
+        Featured · {category}
+      </span>
+      {
+        tags.map((tag) => (
+          <span class="rounded-md bg-band px-2.5 py-1 text-[13px] text-body">{tag}</span>
+        ))
+      }
+    </div>
+    <h3 class="m-0 font-heading text-[30px] leading-[1.2]">{cardTitle}</h3>
+    <p class="m-0 text-body">{summary}</p>
+    {
+      highlights && (
+        <ul class="m-0 flex list-disc flex-col gap-1.5 pl-5 text-body">
+          {highlights.map((item) => (
+            <li>{item}</li>
+          ))}
+        </ul>
+      )
+    }
+    {
+      hasCaseStudy && (
+        <a
+          href={`/projects/${project.id}/`}
+          class="mt-1.5 self-start rounded-lg bg-accent px-5 py-3 font-semibold text-white no-underline hover:bg-accent-dark hover:text-white"
+        >
+          Read the case study →
+        </a>
+      )
+    }
+  </div>
+</article>

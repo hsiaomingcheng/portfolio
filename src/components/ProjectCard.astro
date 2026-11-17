@@ -1,0 +1,68 @@
+---
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+}
+
+const { project } = Astro.props;
+const { cardTitle, summary, category, tags, cover, coverAlt, links, hasCaseStudy } = project.data;
+
+const linkClass = 'py-2.5 font-semibold';
+---
+
+<article
+  class="flex min-w-0 flex-[1_1_300px] flex-col overflow-hidden rounded-2xl border border-line bg-white"
+>
+  {
+    cover ? (
+      <Image
+        src={cover}
+        alt={coverAlt ?? ''}
+        width={800}
+        height={360}
+        class="block h-[180px] w-full border-b border-line bg-band object-cover object-left-top"
+      />
+    ) : (
+      <div class="flex h-[180px] items-center justify-center bg-line font-mono text-[13px] text-muted">
+        [Screenshot]
+      </div>
+    )
+  }
+  <div class="flex grow flex-col gap-3.5 p-7">
+    <div class="font-mono text-[13px] text-muted">{category}</div>
+    <h3 class="m-0 font-heading text-[22px]">{cardTitle}</h3>
+    <p class="m-0 text-base text-body">{summary}</p>
+    <ul class="m-0 flex list-none flex-wrap gap-1.5 p-0">
+      {
+        tags.map((tag) => (
+          <li class="rounded-md bg-band px-2 py-[3px] text-xs text-body">{tag}</li>
+        ))
+      }
+    </ul>
+    <div class="mt-auto flex gap-4 pt-2">
+      {
+        hasCaseStudy && (
+          <a href={`/projects/${project.id}/`} class={linkClass}>
+            Case study
+          </a>
+        )
+      }
+      {
+        links?.live && (
+          <a href={links.live} target="_blank" rel="noopener" class={linkClass}>
+            Live demo<span class="sr-only"> of {cardTitle}</span>
+          </a>
+        )
+      }
+      {
+        links?.github && (
+          <a href={links.github} target="_blank" rel="noopener" class={linkClass}>
+            GitHub<span class="sr-only"> repository for {cardTitle}</span>
+          </a>
+        )
+      }
+    </div>
+  </div>
+</article>

@@ -1,0 +1,34 @@
+---
+import { getCollection } from 'astro:content';
+import FeaturedProjectCard from './FeaturedProjectCard.astro';
+import ProjectCard from './ProjectCard.astro';
+
+const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+const featured = projects.find((p) => p.data.featured);
+const others = projects.filter((p) => p !== featured);
+---
+
+<section id="work" aria-labelledby="work-title" class="bg-band py-16 md:py-[88px]">
+  <div class="mx-auto flex max-w-[1120px] flex-col gap-10 px-6">
+    <div class="flex flex-col gap-2">
+      <div class="font-mono text-[13px] uppercase tracking-[0.04em] text-accent">
+        Selected work
+      </div>
+      <h2
+        id="work-title"
+        class="m-0 font-heading text-[clamp(1.875rem,4vw,2.5rem)] leading-[1.15] tracking-[-0.01em]"
+      >
+        Real projects, real problems
+      </h2>
+    </div>
+
+    {featured && <FeaturedProjectCard project={featured} />}
+
+    <div class="flex flex-wrap gap-6">
+      {others.map((project) => <ProjectCard project={project} />)}
+    </div>
+
+    <!-- Phase 4 adds the "Before New Zealand" Taiwan clients sub-section here. -->
+    <slot />
+  </div>
+</section>
