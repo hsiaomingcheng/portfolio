@@ -1,0 +1,68 @@
+---
+const facts = [
+  { label: 'Based in', value: 'Lincoln, Canterbury, NZ' },
+  { label: 'Studying', value: 'Master of Applied Computing, Lincoln University' },
+  { label: 'Experience', value: '7 years as a frontend developer in Taiwan' },
+  { label: 'Looking for', value: 'Full-stack developer · AI developer roles' },
+  { label: 'Languages', value: 'English · Mandarin' },
+];
+---
+
+<section
+  aria-labelledby="hero-title"
+  class="mx-auto flex max-w-[1120px] flex-wrap items-center gap-14 px-6 pb-16 pt-16 md:pb-[88px] md:pt-24"
+>
+  <div class="flex min-w-0 flex-[999_1_520px] flex-col gap-6">
+    <div
+      class="inline-flex items-center gap-2.5 self-start rounded-full bg-accent-soft px-3.5 py-1.5 font-mono text-[13px] text-accent-dark"
+    >
+      <span aria-hidden="true" class="size-2 rounded-full bg-success"></span>
+      Graduating Nov 2026 · Open to work
+    </div>
+
+    <h1
+      id="hero-title"
+      class="font-heading text-[clamp(2.5rem,6vw,3.75rem)] font-bold leading-[1.05] tracking-[-0.02em]"
+    >
+      Seven years of frontend. Now building{' '}
+      <span class="text-accent">full-stack and AI-powered web apps.</span>
+    </h1>
+
+    <p class="max-w-[620px] text-xl text-body">
+      I'm Chris — I spent seven years as a frontend developer in Taiwan, and I'm finishing a
+      Master of Applied Computing at Lincoln University. Most recently I redesigned and rebuilt
+      the website and online shop for an NZ agricultural electronics company, as their only IT
+      person.
+    </p>
+
+    <div class="flex flex-wrap gap-3 pt-2">
+      <a
+        href="#work"
+        class="rounded-lg bg-accent px-6 py-3.5 font-semibold text-white no-underline hover:bg-accent-dark hover:text-white"
+      >
+        View my work
+      </a>
+      <a
+        href="#contact"
+        class="rounded-lg border-[1.5px] border-ink px-6 py-3.5 font-semibold text-ink no-underline hover:bg-ink hover:text-white"
+      >
+        Get in touch
+      </a>
+    </div>
+  </div>
+
+  <aside
+    aria-label="Quick facts"
+    class="flex min-w-0 flex-[1_1_300px] flex-col gap-5 rounded-2xl border border-line bg-surface p-7"
+  >
+    <div class="font-mono text-[13px] uppercase tracking-[0.04em] text-muted">Quick facts</div>
+    <dl class="m-0 flex flex-col gap-5">
+      {facts.map((fact) => (
+        <div class="flex flex-col gap-1">
+          <dt class="text-sm text-muted">{fact.label}</dt>
+          <dd class="m-0 font-semibold">{fact.value}</dd>
+        </div>
+      ))}
+    </dl>
+  </aside>
+</section>
