@@ -1,0 +1,66 @@
+---
+import { skillGroups } from '../data/skills';
+
+const howIWork = [
+  'Break big jobs into small steps, and check each one before moving on',
+  'Use AI tools to move faster — then review every line myself',
+  'Explain the "why" behind technical decisions, not just the "what"',
+  'Prefer working on-site: quick conversations beat long chat threads',
+];
+---
+
+<section
+  id="about"
+  aria-labelledby="about-title"
+  class="mx-auto flex max-w-[1120px] flex-wrap items-start gap-14 px-6 py-16 md:py-24"
+>
+  <!--
+    [TODO: profile photo] Chris to supply (4:5). When it exists, put it in
+    src/assets/ and replace this placeholder with an astro:assets <Image /> and real alt text.
+  -->
+  <div
+    class="flex aspect-[4/5] min-w-[260px] flex-[0_1_340px] items-center justify-center rounded-2xl bg-line font-mono text-sm text-muted"
+  >
+    [Your photo]
+  </div>
+
+  <div class="flex min-w-0 flex-[999_1_480px] flex-col gap-5">
+    <div class="font-mono text-[13px] uppercase tracking-[0.04em] text-accent">About</div>
+    <h2
+      id="about-title"
+      class="m-0 font-heading text-[clamp(1.875rem,4vw,2.5rem)] leading-[1.15] tracking-[-0.01em]"
+    >
+      From Taiwan to Canterbury
+    </h2>
+    <p class="m-0 text-body">
+      I spent seven years as a frontend developer in Taiwan, building commercial websites and
+      maintaining live sites for clients ranging from a hotel, a jewellery brand and a tyre
+      company to a food R&amp;D company, a game developer and Taipei's Museum of Contemporary Art.
+      I then moved to New Zealand to study a Master of Applied Computing at Lincoln University,
+      where I've grown into full-stack work and building with AI.
+    </p>
+    <p class="m-0 text-body">
+      At Frizzell I learned that code is only half the job. As the only IT person, I gathered
+      requirements, planned the timeline and explained technical choices in plain language to a
+      non-technical team.
+    </p>
+
+    <div class="flex flex-col gap-3 pt-2">
+      <h3 class="m-0 font-heading text-xl">How I work</h3>
+      <ul class="m-0 flex list-disc flex-col gap-1.5 pl-5 text-body">
+        {howIWork.map((item) => <li>{item}</li>)}
+      </ul>
+    </div>
+
+    <ul class="m-0 flex list-none flex-wrap gap-4 p-0 pt-4">
+      {
+        skillGroups.map((group) => (
+          <li class="flex min-w-0 flex-[1_1_220px] flex-col gap-2 rounded-xl border border-line p-5">
+            <h3 class="m-0 text-[17px] font-semibold">{group.title}</h3>
+            <p class="m-0 text-[15px] text-muted">{group.items.join(', ')}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
