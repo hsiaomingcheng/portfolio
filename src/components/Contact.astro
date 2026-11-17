@@ -1,0 +1,52 @@
+---
+import { site } from '../data/site';
+
+// The default accent focus ring is hard to see on a dark background,
+// so every link in this section uses the lighter on-dark-accent colour.
+const ring = 'focus-visible:outline-on-dark-accent';
+const outlineClass = `flex-[1_1_120px] rounded-lg border-[1.5px] border-muted px-4 py-3 text-center font-semibold text-on-dark no-underline hover:bg-footer-line hover:text-on-dark ${ring}`;
+---
+
+<section
+  id="contact"
+  aria-labelledby="contact-title"
+  class="bg-ink py-16 text-on-dark md:py-24"
+>
+  <div
+    class="mx-auto flex max-w-[1120px] flex-wrap items-end justify-between gap-10 px-6"
+  >
+    <div class="flex min-w-0 flex-[999_1_520px] flex-col gap-4">
+      <div class="font-mono text-[13px] uppercase tracking-[0.04em] text-on-dark-accent">
+        Contact
+      </div>
+      <h2
+        id="contact-title"
+        class="m-0 font-heading text-[clamp(2.25rem,5vw,3rem)] leading-[1.1] tracking-[-0.01em]"
+      >
+        Let's talk.
+      </h2>
+      <p class="m-0 max-w-[560px] text-[19px] text-on-dark-muted">
+        I'm finishing my degree in November 2026 and looking for full-stack developer or AI
+        developer roles in Christchurch and Canterbury. I'd love to hear from you.
+      </p>
+    </div>
+
+    <div id="cv" class="flex min-w-0 flex-[1_1_320px] flex-col gap-3">
+      <a
+        href={`mailto:${site.email}`}
+        class={`break-words rounded-lg bg-white px-5 py-3.5 text-center font-semibold text-ink no-underline hover:bg-band hover:text-ink ${ring}`}
+      >
+        Email me — {site.email}
+      </a>
+      <div class="flex flex-wrap gap-3">
+        <a href={site.linkedin} target="_blank" rel="noopener" class={outlineClass}>
+          LinkedIn<span class="sr-only"> (opens in a new tab)</span>
+        </a>
+        <a href={site.github} target="_blank" rel="noopener" class={outlineClass}>
+          GitHub<span class="sr-only"> (opens in a new tab)</span>
+        </a>
+        <a href={site.cvPath} class={outlineClass}>CV (PDF)</a>
+      </div>
+    </div>
+  </div>
+</section>
