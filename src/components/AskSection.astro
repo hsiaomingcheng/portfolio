@@ -1,0 +1,41 @@
+---
+import Chat from './chat/Chat';
+---
+
+<section
+  id="ask"
+  aria-labelledby="ask-title"
+  class="mx-auto flex max-w-[1120px] flex-wrap items-start gap-12 px-6 pb-16 md:pb-24"
+>
+  <div class="flex min-w-0 flex-[1_1_340px] flex-col gap-4 pt-6">
+    <div class="font-mono text-[13px] uppercase tracking-[0.04em] text-accent">
+      Ask me anything
+    </div>
+    <h2
+      id="ask-title"
+      class="m-0 font-heading text-[clamp(1.875rem,4vw,2.5rem)] leading-[1.15] tracking-[-0.01em]"
+    >
+      Short on time? Ask my CV.
+    </h2>
+    <p class="m-0 text-body">
+      This chatbot answers questions about my experience using only what's in my CV. I built it
+      myself — React on the front, a Python API and AI search on the back.
+    </p>
+    <p class="m-0 text-[15px] text-muted">
+      If it doesn't know something, it says so instead of making it up.
+    </p>
+    <a
+      href="https://github.com/hsiaomingcheng/rag-chatbot"
+      target="_blank"
+      rel="noopener"
+      class="self-start py-2.5 font-semibold"
+    >
+      How I built it →<span class="sr-only"> (opens in a new tab)</span>
+    </a>
+  </div>
+
+  <div class="min-w-0 flex-[999_1_560px]">
+    <!-- Hydrates when it scrolls into view. The wake-up ping in BaseLayout has already run. -->
+    <Chat client:visible />
+  </div>
+</section>

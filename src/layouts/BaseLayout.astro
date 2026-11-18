@@ -19,6 +19,12 @@ interface Props {
 
 const { title = site.defaultTitle, description = site.defaultDescription } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site ?? site.url);
+
+// Where the chatbot backend lives (set in .env). Used by the wake-up ping below.
+const chatbotApi = ((import.meta.env.PUBLIC_CHATBOT_API_URL as string | undefined) ?? '').replace(
+  /\/$/,
+  '',
+);
 ---
 
 <!doctype html>
@@ -36,6 +42,28 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? site.url);
     <meta property="og:url" content={canonical} />
     <meta property="og:locale" content="en_NZ" />
     <meta name="twitter:card" content="summary" />
+
+    <!--
+      Wake-up ping. Render's free tier sleeps when idle, so poke it as soon as any page
+      loads; it is then awake by the time the visitor scrolls to the chat.
+      Fire-and-forget: never awaited, never blocks rendering, errors swallowed.
+      Sent once per browsing session. "no-cors" is enough to wake the server (we ignore the
+      response), and it avoids a CORS error in the console on pages that don't use the chat.
+    -->
+    <script is:inline define:vars={{ chatbotApi }}>
+      (function () {
+        if (!chatbotApi) return;
+        var alreadySent = false;
+        try {
+          alreadySent = sessionStorage.getItem('chatbot-wakeup') === '1';
+          if (!alreadySent) sessionStorage.setItem('chatbot-wakeup', '1');
+        } catch (e) {
+          // sessionStorage can throw in some privacy modes. Ping anyway.
+        }
+        if (alreadySent) return;
+        fetch(chatbotApi + '/api/health', { mode: 'no-cors' }).catch(function () {});
+      })();
+    </script>
   </head>
   <body id="top">
     <!-- Hidden until focused, so keyboard users can skip the nav. -->
