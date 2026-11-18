@@ -1,0 +1,29 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Page not found | Chris Hsiao"
+  description="This page doesn't exist. Head back to Chris Hsiao's portfolio."
+  noindex
+>
+  <section aria-labelledby="nf-title" class="mx-auto max-w-[1120px] px-6 py-24">
+    <p class="m-0 font-mono text-[13px] uppercase tracking-[0.04em] text-accent">Error 404</p>
+    <h1
+      id="nf-title"
+      class="mb-4 mt-3 font-heading text-[clamp(2.25rem,5vw,3.5rem)] font-bold leading-[1.08] tracking-[-0.02em] text-ink"
+    >
+      Page not found
+    </h1>
+    <p class="mb-8 mt-0 max-w-[560px] text-xl">
+      That page doesn't exist or has moved. The home page has everything: my work, my story and how
+      to contact me.
+    </p>
+    <a
+      href="/"
+      class="inline-flex min-h-11 items-center rounded-lg bg-accent px-6 font-semibold text-white no-underline hover:bg-accent-dark"
+    >
+      Back to home
+    </a>
+  </section>
+</BaseLayout>

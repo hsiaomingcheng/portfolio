@@ -15,9 +15,22 @@ import { site } from '../data/site';
 interface Props {
   title?: string;
   description?: string;
+  /** Keep a page out of search results (used by the 404 page). */
+  noindex?: boolean;
+  /** Open Graph type: "website" for the home page, "article" for case studies. */
+  ogType?: 'website' | 'article';
+  /** Absolute or site-relative path to a 1200×630 share image. [TODO: add once the domain is known] */
+  ogImage?: string;
 }
 
-const { title = site.defaultTitle, description = site.defaultDescription } = Astro.props;
+const {
+  title = site.defaultTitle,
+  description = site.defaultDescription,
+  noindex = false,
+  ogType = 'website',
+  ogImage,
+} = Astro.props;
+const imageUrl = ogImage ? new URL(ogImage, Astro.site ?? site.url).href : undefined;
 const canonical = new URL(Astro.url.pathname, Astro.site ?? site.url);
 
 // Where the chatbot backend lives (set in .env). Used by the wake-up ping below.
@@ -35,13 +48,20 @@ const chatbotApi = ((import.meta.env.PUBLIC_CHATBOT_API_URL as string | undefine
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    {noindex && <meta name="robots" content="noindex" />}
 
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:site_name" content={site.name} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:locale" content="en_NZ" />
-    <meta name="twitter:card" content="summary" />
+    {imageUrl && <meta property="og:image" content={imageUrl} />}
+    <meta name="twitter:card" content={imageUrl ? 'summary_large_image' : 'summary'} />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    {imageUrl && <meta name="twitter:image" content={imageUrl} />}
 
     <!--
       Wake-up ping. Render's free tier sleeps when idle, so poke it as soon as any page
@@ -65,7 +85,7 @@ const chatbotApi = ((import.meta.env.PUBLIC_CHATBOT_API_URL as string | undefine
       })();
     </script>
   </head>
-  <body id="top">
+  <body id="top" class="flex min-h-screen flex-col">
     <!-- Hidden until focused, so keyboard users can skip the nav. -->
     <a
       href="#main"
@@ -74,7 +94,7 @@ const chatbotApi = ((import.meta.env.PUBLIC_CHATBOT_API_URL as string | undefine
       Skip to content
     </a>
     <Header />
-    <main id="main">
+    <main id="main" class="flex-1">
       <slot />
     </main>
     <Footer />

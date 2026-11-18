@@ -44,7 +44,11 @@ const h2Class = 'm-0 font-heading text-[32px] leading-[1.2]';
 const nextHref = next?.data.hasCaseStudy ? `/projects/${next.id}/` : '/#work';
 ---
 
-<BaseLayout title={`${title} | Chris Hsiao`} description={project.data.summary}>
+<BaseLayout
+  title={`${title} | Chris Hsiao`}
+  description={project.data.summary}
+  ogType="article"
+>
   <article class="leading-[1.65]">
     <section
       aria-labelledby="cs-title"
