@@ -1,13 +1,15 @@
-import { useId, useState, type SyntheticEvent } from 'react';
+import { useId, useState, type Ref, type SyntheticEvent } from 'react';
 
 const MAX_LENGTH = 500; // keep in sync with MAX_QUESTION_CHARS in the backend's config.py
 
 interface Props {
   onSend: (question: string) => void;
   disabled: boolean;
+  /** Lets the parent return focus to the input after an answer finishes. */
+  inputRef?: Ref<HTMLInputElement>;
 }
 
-export default function ChatInput({ onSend, disabled }: Props) {
+export default function ChatInput({ onSend, disabled, inputRef }: Props) {
   const [value, setValue] = useState('');
   const inputId = useId();
   const hintId = useId();
@@ -28,6 +30,7 @@ export default function ChatInput({ onSend, disabled }: Props) {
           Your question
         </label>
         <input
+          ref={inputRef}
           id={inputId}
           type="text"
           value={value}

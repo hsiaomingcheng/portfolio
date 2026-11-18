@@ -32,6 +32,9 @@ export default function Chat() {
   const [phase, setPhase] = useState<'idle' | 'waiting' | 'streaming'>('idle');
   const { status: serverStatus, retry } = useServerStatus();
   const listRef = useRef<HTMLDivElement>(null);
+  const rootRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const previousPhase = useRef(phase);
 
   // Don't allow sending while the server is still waking up, or while an answer is on its way.
   const serverPending = serverStatus === 'checking' || serverStatus === 'waking';
@@ -42,6 +45,21 @@ export default function Chat() {
     const list = listRef.current;
     if (list) list.scrollTop = list.scrollHeight;
   }, [messages, phase]);
+
+  // The input and chips are disabled while an answer is on its way, and a disabled element
+  // loses focus. When the answer finishes, hand focus back to the input so keyboard users can
+  // ask a follow-up straight away. Only do it if focus was lost (or is still inside the widget),
+  // so we never pull focus away from somewhere else the visitor has moved to.
+  // Note: `previousPhase` is updated before the early return so the transition is seen once.
+  useEffect(() => {
+    const finished = previousPhase.current !== 'idle' && phase === 'idle';
+    previousPhase.current = phase;
+    // Skip touch screens: refocusing there would pop the on-screen keyboard up unasked.
+    if (!finished || !window.matchMedia('(pointer: fine)').matches) return;
+    const active = document.activeElement;
+    const focusLost = !active || active === document.body;
+    if (focusLost || rootRef.current?.contains(active)) inputRef.current?.focus();
+  }, [phase]);
 
   const handleSend = async (question: string) => {
     const answerId = crypto.randomUUID();
@@ -75,7 +93,10 @@ export default function Chat() {
   };
 
   return (
-    <div className="flex min-w-0 flex-col overflow-hidden rounded-2xl border border-line bg-white shadow-widget">
+    <div
+      ref={rootRef}
+      className="flex min-w-0 flex-col overflow-hidden rounded-2xl border border-line bg-white shadow-widget"
+    >
       <div className="flex items-center justify-between gap-3 border-b border-line px-[22px] py-4">
         <div className="flex items-center gap-2.5">
           <span
@@ -161,14 +182,14 @@ export default function Chat() {
         </div>
       </div>
 
-      <ChatInput onSend={handleSend} disabled={blocked} />
+      <ChatInput onSend={handleSend} disabled={blocked} inputRef={inputRef} />
 
       <div className="px-[22px] pb-4 text-[13px] text-muted">
         <a
           href="https://rag-chatbot-psi-liart.vercel.app/"
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-block py-2"
+          className="inline-flex min-h-11 items-center"
         >
           Open the full chatbot ↗<span className="sr-only"> (opens in a new tab)</span>
         </a>

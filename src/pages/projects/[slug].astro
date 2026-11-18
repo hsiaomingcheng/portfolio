@@ -99,7 +99,7 @@ const nextHref = next?.data.hasCaseStudy ? `/projects/${next.id}/` : '/#work';
     </div>
 
     <div class="mx-auto flex max-w-[760px] flex-col gap-16 px-6 pt-20">
-      {before.map((html) => <section class="case-prose" set:html={html} />)}
+      {before.map((html) => <section aria-labelledby={idOf(html)} class="case-prose" set:html={html} />)}
 
       {
         decisions && decisions.length > 0 && (
@@ -152,7 +152,7 @@ const nextHref = next?.data.hasCaseStudy ? `/projects/${next.id}/` : '/#work';
         )
       }
 
-      {challenges.map((html) => <section class="case-prose" set:html={html} />)}
+      {challenges.map((html) => <section aria-labelledby={idOf(html)} class="case-prose" set:html={html} />)}
 
       {
         results && results.length > 0 && (
@@ -174,7 +174,7 @@ const nextHref = next?.data.hasCaseStudy ? `/projects/${next.id}/` : '/#work';
         )
       }
 
-      {after.map((html) => <section class="case-prose" set:html={html} />)}
+      {after.map((html) => <section aria-labelledby={idOf(html)} class="case-prose" set:html={html} />)}
     </div>
 
     {
