@@ -1,0 +1,193 @@
+---
+import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+// One page per project that has a case study.
+export async function getStaticPaths() {
+  const all = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+  return all
+    .filter((project) => project.data.hasCaseStudy)
+    .map((project) => {
+      const index = all.indexOf(project);
+      const next = all[(index + 1) % all.length];
+      return {
+        params: { slug: project.id },
+        props: { project, next: next === project ? undefined : next },
+      };
+    });
+}
+
+const { project, next } = Astro.props;
+const { title, intro, category, cover, coverAlt, role, timeline, tools, status } = project.data;
+const { decisions, beforeAfter, results } = project.data;
+
+// The Markdown body holds the prose sections, but the design puts cards from the
+// frontmatter between them. So split the rendered HTML at each <h2> and place the
+// cards between the pieces:
+//   [prose up to "Challenges"] → decisions → before/after → "Challenges" → results → [the rest]
+const chunks = (project.rendered?.html ?? '').split(/(?=<h2[\s>])/).filter((c) => c.trim());
+const idOf = (chunk: string) => chunk.match(/<h2[^>]*\sid="([^"]+)"/)?.[1];
+const splitAt = chunks.findIndex((c) => idOf(c) === 'challenges-and-fixes');
+const before = splitAt === -1 ? chunks : chunks.slice(0, splitAt);
+const challenges = splitAt === -1 ? [] : [chunks[splitAt]];
+const after = splitAt === -1 ? [] : chunks.slice(splitAt + 1);
+
+const meta = [
+  { label: 'My role', value: role },
+  { label: 'Timeline', value: timeline },
+  { label: 'Built with', value: tools?.join(', ') },
+  { label: 'Status', value: status },
+].filter((item): item is { label: string; value: string } => Boolean(item.value));
+
+const h2Class = 'm-0 font-heading text-[32px] leading-[1.2]';
+const nextHref = next?.data.hasCaseStudy ? `/projects/${next.id}/` : '/#work';
+---
+
+<BaseLayout title={`${title} | Chris Hsiao`} description={project.data.summary}>
+  <article class="leading-[1.65]">
+    <section
+      aria-labelledby="cs-title"
+      class="mx-auto flex max-w-[1120px] flex-col gap-6 px-6 pb-12 pt-14"
+    >
+      <a href="/#work" class="self-start py-2.5 font-semibold no-underline">← All projects</a>
+      <div class="font-mono text-[13px] uppercase tracking-[0.04em] text-accent">
+        Case study · {category}
+      </div>
+      <h1
+        id="cs-title"
+        class="m-0 max-w-[900px] font-heading text-[clamp(2.25rem,5vw,3.5rem)] font-bold leading-[1.08] tracking-[-0.02em]"
+      >
+        {title}
+      </h1>
+      {intro && <p class="m-0 max-w-[760px] text-xl text-body">{intro}</p>}
+
+      {
+        meta.length > 0 && (
+          <dl class="m-0 mt-4 flex flex-wrap gap-4">
+            {meta.map((item) => (
+              <div class="min-w-0 flex-[1_1_200px] border-t-2 border-ink pt-3.5">
+                <dt class="text-sm text-muted">{item.label}</dt>
+                <dd class="m-0 mt-1 font-semibold">{item.value}</dd>
+              </div>
+            ))}
+          </dl>
+        )
+      }
+    </section>
+
+    <div class="mx-auto max-w-[1120px] px-6">
+      {
+        cover ? (
+          <Image
+            src={cover}
+            alt={coverAlt ?? ''}
+            width={1120}
+            height={520}
+            class="h-[260px] w-full rounded-2xl object-cover object-top md:h-[520px]"
+          />
+        ) : (
+          <div class="flex h-[260px] items-center justify-center rounded-2xl bg-line px-4 text-center font-mono text-sm text-muted md:h-[520px]">
+            [Hero screenshot — new homepage, desktop + phone]
+          </div>
+        )
+      }
+    </div>
+
+    <div class="mx-auto flex max-w-[760px] flex-col gap-16 px-6 pt-20">
+      {before.map((html) => <section class="case-prose" set:html={html} />)}
+
+      {
+        decisions && decisions.length > 0 && (
+          <section aria-labelledby="decisions" class="flex flex-col gap-5">
+            <h2 id="decisions" class={h2Class}>
+              Key decisions
+            </h2>
+            <ul class="m-0 flex list-none flex-wrap gap-4 p-0">
+              {decisions.map((decision) => (
+                <li class="flex min-w-0 flex-[1_1_320px] flex-col gap-2 rounded-xl border border-line bg-surface p-6">
+                  <h3 class="m-0 font-heading text-xl">{decision.title}</h3>
+                  <p class="m-0 text-base text-body">{decision.text}</p>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )
+      }
+
+      {
+        beforeAfter && (
+          <section aria-labelledby="beforeafter" class="flex flex-col gap-5">
+            <h2 id="beforeafter" class={h2Class}>
+              Before and after
+            </h2>
+            <div class="flex flex-wrap gap-4">
+              {[
+                { image: beforeAfter.before, alt: beforeAfter.beforeAlt, caption: 'Before', placeholder: '[Old homepage]' },
+                { image: beforeAfter.after, alt: beforeAfter.afterAlt, caption: 'After', placeholder: '[New homepage]' },
+              ].map((item) => (
+                <figure class="m-0 flex min-w-0 flex-[1_1_320px] flex-col gap-2">
+                  {item.image ? (
+                    <Image
+                      src={item.image}
+                      alt={item.alt}
+                      width={720}
+                      height={480}
+                      class="h-60 w-full rounded-xl object-cover object-top"
+                    />
+                  ) : (
+                    <div class="flex h-60 items-center justify-center rounded-xl bg-line font-mono text-[13px] text-muted">
+                      {item.placeholder}
+                    </div>
+                  )}
+                  <figcaption class="text-sm text-muted">{item.caption}</figcaption>
+                </figure>
+              ))}
+            </div>
+          </section>
+        )
+      }
+
+      {challenges.map((html) => <section class="case-prose" set:html={html} />)}
+
+      {
+        results && results.length > 0 && (
+          <section aria-labelledby="results" class="flex flex-col gap-5">
+            <h2 id="results" class={h2Class}>
+              Results
+            </h2>
+            <ul class="m-0 flex list-none flex-wrap gap-4 p-0">
+              {results.map((result) => (
+                <li class="flex min-w-0 flex-[1_1_200px] flex-col gap-1 rounded-xl border border-line p-6">
+                  <div class="font-heading text-[40px] font-bold leading-[1.2] text-accent">
+                    {result.number}
+                  </div>
+                  <div class="text-[15px] text-body">{result.label}</div>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )
+      }
+
+      {after.map((html) => <section class="case-prose" set:html={html} />)}
+    </div>
+
+    {
+      next && (
+        <div class="mx-auto max-w-[760px] px-6 pb-24 pt-[72px]">
+          <a
+            href={nextHref}
+            class="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-line px-7 py-6 text-ink no-underline hover:border-line-strong hover:text-ink"
+          >
+            <span class="flex flex-col gap-0.5">
+              <span class="text-sm text-muted">Next project</span>
+              <span class="font-heading text-[22px] font-semibold">{next.data.cardTitle}</span>
+            </span>
+            <span class="font-semibold text-accent">View →</span>
+          </a>
+        </div>
+      )
+    }
+  </article>
+</BaseLayout>

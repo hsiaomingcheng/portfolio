@@ -25,7 +25,8 @@ const projects = defineCollection({
       hasCaseStudy: z.boolean().default(false),
       highlights: z.array(z.string()).optional(),
 
-      // Case-study-only fields (used from Phase 7)
+      // Case-study-only fields (used by src/pages/projects/[slug].astro)
+      intro: z.string().optional(), // lead paragraph under the case study title
       role: z.string().optional(),
       timeline: z.string().optional(),
       tools: z.array(z.string()).optional(),
@@ -34,8 +35,9 @@ const projects = defineCollection({
       results: z.array(z.object({ number: z.string(), label: z.string() })).optional(),
       beforeAfter: z
         .object({
-          before: image(),
-          after: image(),
+          // Optional: a labelled placeholder shows until the screenshots exist.
+          before: image().optional(),
+          after: image().optional(),
           beforeAlt: z.string(),
           afterAlt: z.string(),
         })
