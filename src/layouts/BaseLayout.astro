@@ -19,7 +19,7 @@ interface Props {
   noindex?: boolean;
   /** Open Graph type: "website" for the home page, "article" for case studies. */
   ogType?: 'website' | 'article';
-  /** Absolute or site-relative path to a 1200×630 share image. [TODO: add once the domain is known] */
+  /** Absolute or site-relative path to a 1200×630 share image. Defaults to the site-wide one. */
   ogImage?: string;
 }
 
@@ -28,9 +28,9 @@ const {
   description = site.defaultDescription,
   noindex = false,
   ogType = 'website',
-  ogImage,
+  ogImage = '/og-image.png',
 } = Astro.props;
-const imageUrl = ogImage ? new URL(ogImage, Astro.site ?? site.url).href : undefined;
+const imageUrl = new URL(ogImage, Astro.site ?? site.url).href;
 const canonical = new URL(Astro.url.pathname, Astro.site ?? site.url);
 
 // Where the chatbot backend lives (set in .env). Used by the wake-up ping below.
@@ -57,11 +57,14 @@ const chatbotApi = ((import.meta.env.PUBLIC_CHATBOT_API_URL as string | undefine
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:locale" content="en_NZ" />
-    {imageUrl && <meta property="og:image" content={imageUrl} />}
-    <meta name="twitter:card" content={imageUrl ? 'summary_large_image' : 'summary'} />
+    <meta property="og:image" content={imageUrl} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Chris Hsiao, Full-stack and AI Developer. Graduating Nov 2026, open to work in Christchurch and Canterbury, NZ." />
+    <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
-    {imageUrl && <meta name="twitter:image" content={imageUrl} />}
+    <meta name="twitter:image" content={imageUrl} />
 
     <!--
       Wake-up ping. Render's free tier sleeps when idle, so poke it as soon as any page

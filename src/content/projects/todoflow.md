@@ -8,12 +8,10 @@ category: 'Full-stack · Learning project'
 tags: ['FastAPI', 'Python', 'Vercel CI/CD']
 featured: false
 order: 3
-# [TODO: cover — src/assets/projects/todoflow-board.jpg is missing from the repo.
-#  When added, uncomment these two lines (crop from top-left in the card).]
-# cover: ../../assets/projects/todoflow-board.jpg
-# coverAlt: 'TodoFlow board view with lists for Shopping, Chores, To do and In progress, each holding labelled cards'
+cover: ../../assets/projects/todoflow-board.jpg
+coverAlt: 'TodoFlow board view with lists for Shopping, Chores, To do and In progress, each holding labelled cards'
 links:
-  # [TODO: live demo URL — the design had a "#" placeholder]
+  live: 'https://todo-app-two-olive-85.vercel.app/'
   github: 'https://github.com/hsiaomingcheng/Todo-app'
 hasCaseStudy: false
 ---

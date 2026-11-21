@@ -1,4 +1,7 @@
 ---
+import { Image } from 'astro:assets';
+// [TODO: swap src/assets/profile.webp for a better photo later. The 4:5 crop is automatic.]
+import profilePhoto from '../assets/profile.webp';
 import { skillGroups } from '../data/skills';
 
 const howIWork = [
@@ -14,15 +17,13 @@ const howIWork = [
   aria-labelledby="about-title"
   class="mx-auto flex max-w-[1120px] flex-wrap items-start gap-14 px-6 py-16 md:py-24"
 >
-  <!--
-    [TODO: profile photo] Chris to supply (4:5). When it exists, put it in
-    src/assets/ and replace this placeholder with an astro:assets <Image /> and real alt text.
-  -->
-  <div
-    class="flex aspect-[4/5] min-w-[260px] flex-[0_1_340px] items-center justify-center rounded-2xl bg-line font-mono text-sm text-muted"
-  >
-    [Your photo]
-  </div>
+  <Image
+    src={profilePhoto}
+    alt="Chris Hsiao, wearing glasses and a dark jacket, in front of a waterfall in a green forest"
+    widths={[340, 680]}
+    sizes="(min-width: 640px) 340px, 100vw"
+    class="aspect-[4/5] min-w-[260px] flex-[0_1_340px] rounded-2xl border border-line bg-band object-cover object-[45%_30%]"
+  />
 
   <div class="flex min-w-0 flex-[999_1_480px] flex-col gap-5">
     <div class="font-mono text-[13px] uppercase tracking-[0.04em] text-accent">About</div>

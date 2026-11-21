@@ -8,7 +8,8 @@ category: 'AI · Full-stack · Live'
 tags: ['React', 'FastAPI', 'Gemini API', 'ChromaDB', 'Vercel + Render']
 featured: false
 order: 2
-# [TODO: cover screenshot — RAG chatbot]
+cover: ../../assets/projects/rag-chatbot.webp
+coverAlt: 'The Ask-Me-Anything chatbot: an AI assistant answering questions about Chris from his CV, with suggested questions and a message box'
 links:
   live: 'https://rag-chatbot-psi-liart.vercel.app/'
   github: 'https://github.com/hsiaomingcheng/rag-chatbot'
