@@ -8,5 +8,5 @@ export const site = {
   url: 'https://example.com',
   defaultTitle: 'Chris Hsiao — Full-stack & AI Developer',
   defaultDescription:
-    'Chris Hsiao is a frontend developer with seven years of experience, finishing a Master of Applied Computing at Lincoln University and looking for full-stack and AI developer roles in Christchurch and Canterbury, NZ.',
+    'Chris Hsiao is a frontend developer with seven years of experience, who has just completed the coursework for a Master of Applied Computing at Lincoln University, looking for full-stack and AI developer roles in Christchurch and Canterbury, NZ.',
 } as const;

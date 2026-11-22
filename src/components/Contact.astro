@@ -26,17 +26,18 @@ const outlineClass = `flex-[1_1_120px] rounded-lg border-[1.5px] border-muted px
         Let's talk.
       </h2>
       <p class="m-0 max-w-[560px] text-[19px] text-on-dark-muted">
-        I'm finishing my degree in November 2026 and looking for full-stack developer or AI
-        developer roles in Christchurch and Canterbury. I'd love to hear from you.
+        I've just finished my Master's coursework at Lincoln University and I'm looking for
+        full-stack developer or AI developer roles in Christchurch and Canterbury. I'd love to hear from you.
       </p>
     </div>
 
     <div id="cv" class="flex min-w-0 flex-[1_1_320px] flex-col gap-3">
       <a
         href={`mailto:${site.email}`}
-        class={`break-words rounded-lg bg-white px-5 py-3.5 text-center font-semibold text-ink no-underline hover:bg-band hover:text-ink ${ring}`}
+        class={`flex flex-col items-center gap-0.5 break-words rounded-lg bg-white px-5 py-3.5 text-center text-ink no-underline hover:bg-band hover:text-ink ${ring}`}
       >
-        Email me — {site.email}
+        <span class="font-semibold">Email me</span>
+        <span class="text-[15px] text-body">{site.email}</span>
       </a>
       <div class="flex flex-wrap gap-3">
         <a href={site.linkedin} target="_blank" rel="noopener" class={outlineClass}>

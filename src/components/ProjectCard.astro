@@ -20,8 +20,8 @@ const linkClass = 'py-2.5 font-semibold';
       <Image
         src={cover}
         alt={coverAlt ?? ''}
-        width={800}
-        height={360}
+        widths={[560, 1040]}
+        sizes="(min-width: 1120px) 520px, (min-width: 700px) 50vw, 100vw"
         class="block h-[180px] w-full border-b border-line bg-band object-cover object-left-top"
       />
     ) : (
