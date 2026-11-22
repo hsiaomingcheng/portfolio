@@ -20,7 +20,7 @@ export async function getStaticPaths() {
 
 const { project, next } = Astro.props;
 const { title, intro, category, cover, coverAlt, role, timeline, tools, status } = project.data;
-const { decisions, beforeAfter, results } = project.data;
+const { decisions, beforeAfter, results, resultsNote } = project.data;
 
 // The Markdown body holds the prose sections, but the design puts cards from the
 // frontmatter between them. So split the rendered HTML at each <h2> and place the
@@ -127,8 +127,8 @@ const nextHref = next?.data.hasCaseStudy ? `/projects/${next.id}/` : '/#work';
             </h2>
             <div class="flex flex-wrap gap-4">
               {[
-                { image: beforeAfter.before, alt: beforeAfter.beforeAlt, caption: 'Before', placeholder: '[Old homepage]' },
-                { image: beforeAfter.after, alt: beforeAfter.afterAlt, caption: 'After', placeholder: '[New homepage]' },
+                { image: beforeAfter.before, alt: beforeAfter.beforeAlt, caption: 'Before', placeholder: '[Old homepage]', note: undefined },
+                { image: beforeAfter.after, alt: beforeAfter.afterAlt, caption: 'After', placeholder: '[New homepage]', note: beforeAfter.afterNote },
               ].map((item) => (
                 <figure class="m-0 flex min-w-0 flex-[1_1_320px] flex-col gap-2">
                   {item.image ? (
@@ -139,6 +139,10 @@ const nextHref = next?.data.hasCaseStudy ? `/projects/${next.id}/` : '/#work';
                       height={480}
                       class="h-60 w-full rounded-xl object-cover object-top"
                     />
+                  ) : item.note ? (
+                    <div class="flex h-60 items-center justify-center rounded-xl border border-dashed border-line-strong bg-surface p-6 text-center text-body">
+                      {item.note}
+                    </div>
                   ) : (
                     <div class="flex h-60 items-center justify-center rounded-xl bg-line font-mono text-[13px] text-muted">
                       {item.placeholder}
@@ -162,7 +166,7 @@ const nextHref = next?.data.hasCaseStudy ? `/projects/${next.id}/` : '/#work';
             </h2>
             <ul class="m-0 flex list-none flex-wrap gap-4 p-0">
               {results.map((result) => (
-                <li class="flex min-w-0 flex-[1_1_200px] flex-col gap-1 rounded-xl border border-line p-6">
+                <li class="flex min-w-0 flex-[1_1_240px] flex-col gap-1 rounded-xl border border-line p-6">
                   <div class="font-heading text-[40px] font-bold leading-[1.2] text-accent">
                     {result.number}
                   </div>
@@ -170,6 +174,7 @@ const nextHref = next?.data.hasCaseStudy ? `/projects/${next.id}/` : '/#work';
                 </li>
               ))}
             </ul>
+            {resultsNote && <p class="m-0 text-sm text-muted">{resultsNote}</p>}
           </section>
         )
       }

@@ -9,10 +9,10 @@ category: 'Client work'
 tags: ['WordPress', 'WooCommerce', 'Elementor Pro']
 featured: true
 order: 1
-# [TODO: cover screenshot — new Frizzell homepage (desktop + phone). Needs company permission.
-#  Used on the home page card and as the case study hero.]
-# cover: ../../assets/projects/frizzell-home.jpg
-# coverAlt: '...'
+# Cover is a results graphic, not a screenshot, while the new site is still on staging.
+# [TODO: when Frizzell agrees (or the new site goes live), swap in a real screenshot.]
+cover: ../../assets/projects/frizzell-cover.png
+coverAlt: 'Frizzell Agricultural Electronics website rebuild. Lighthouse desktop scores, old site to new site on staging: Performance 84 to 87, Accessibility 93 to 96, Best Practices 65 to 100, SEO 77 to 92. 16 pages rebuilt, with 5 industry and 5 solution pages.'
 hasCaseStudy: true
 highlights:
   - '16 pages redesigned and rebuilt in a new brand palette'
@@ -36,25 +36,38 @@ decisions:
     text: "I sampled the logo's orange and blue, toned them down for screens, and the owners approved the new palette."
   - title: 'Build on staging, not the live site'
     text: 'All work happened on a separate copy with its own database, so customers were never affected while I built.'
-# [TODO: before/after screenshots — old vs new homepage. Needs company permission.
-#  Add `before:` and `after:` image paths below; placeholders show until then.]
+# Before = the old, public homepage. After = held back while the new site is on staging.
+# [TODO: when Frizzell agrees (or the new site goes live), add `after:` with a screenshot
+#  and remove `afterNote`.]
 beforeAfter:
-  beforeAlt: 'The old Frizzell homepage'
+  before: ../../assets/projects/frizzell-before.webp
+  beforeAlt: "The old Frizzell homepage: a solar water pumps banner above an orange strip reading Frizzell Agricultural Electronics, with a navigation bar for pumps, scales, shop and downloads"
   afterAlt: 'The new Frizzell homepage'
-results:
-  - number: '16'
-    label: 'pages redesigned and rebuilt'
-  - number: '5 + 5'
-    label: 'industry and solution pages'
-  - number: '[x → y]'
-    label: '[TODO: page speed score, before → after]'
+  afterNote: "The new design is still in testing with Frizzell's team, so I can't show it yet. The “Before” screenshot is the current live homepage."
+# Results cards are hidden for now: the scores are already on the cover graphic, so the cards
+# repeated them. [TODO: when the new site is live in production, restore the block below
+# (uncomment `results` and `resultsNote`) and swap the cover for a real new-homepage screenshot.]
+# results:
+#   - number: '16'
+#     label: 'pages redesigned and rebuilt'
+#   - number: '5 + 5'
+#     label: 'industry and solution pages'
+#   - number: "84\u00a0→\u00a087"
+#     label: 'Lighthouse Performance score, old site → new site'
+#   - number: "93\u00a0→\u00a096"
+#     label: 'Lighthouse Accessibility score'
+#   - number: "65\u00a0→\u00a0100"
+#     label: 'Lighthouse Best Practices score'
+#   - number: "77\u00a0→\u00a092"
+#     label: 'Lighthouse SEO score'
+# resultsNote: "Lighthouse desktop scores for Frizzell's current live site compared with the new site on staging. Scores vary a little between runs."
 ---
 
 ## The problem
 
 The old site was built on an older theme with no live visual editor, so even small design changes meant writing custom code. The company needed a modern site that shows its products by industry and by solution, and an online shop that works smoothly.
 
-[TODO: add one or two sentences in your own words — what wasn't working for customers or the team?]
+The other issue is that many of Frizzell's customers are farmers, and they often live in rural areas with a poor internet connection and slow speeds. That made loading time and responsiveness very important for the new website.
 
 ## What I did
 
@@ -73,4 +86,6 @@ I was the only IT person, so the job covered much more than code:
 
 ## What I learned
 
-[TODO: in your own words — e.g. what working as the only IT person taught you about explaining technical choices to a non-technical team.]
+Back in the day, as a frontend developer, I didn't have to think about UI/UX. This time I had to consider not only the layout but also how to fit the right content into it.
+
+I also found that making a timeline and setting milestones is crucial. It helped me work out what I should do each week, and made it easy to track progress and follow up on tasks.

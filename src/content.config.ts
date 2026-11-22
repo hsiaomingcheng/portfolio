@@ -33,6 +33,8 @@ const projects = defineCollection({
       status: z.string().optional(),
       decisions: z.array(z.object({ title: z.string(), text: z.string() })).optional(),
       results: z.array(z.object({ number: z.string(), label: z.string() })).optional(),
+      // Small caption under the results cards (e.g. where the numbers came from).
+      resultsNote: z.string().optional(),
       beforeAfter: z
         .object({
           // Optional: a labelled placeholder shows until the screenshots exist.
@@ -40,6 +42,8 @@ const projects = defineCollection({
           after: image().optional(),
           beforeAlt: z.string(),
           afterAlt: z.string(),
+          // Shown instead of a placeholder when there is no `after` image (e.g. not yet public).
+          afterNote: z.string().optional(),
         })
         .optional(),
     }),
