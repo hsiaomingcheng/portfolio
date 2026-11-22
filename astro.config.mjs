@@ -6,9 +6,9 @@ import tailwindcss from '@tailwindcss/vite';
 
 // https://astro.build/config
 export default defineConfig({
-  // [TODO: domain] Replace with the real domain once Chris has one.
+  // Currently the free workers.dev address. [TODO: swap for a custom domain if Chris gets one.]
   // The sitemap and canonical URLs need it.
-  site: 'https://example.com',
+  site: 'https://portfolio.hsiao516.workers.dev',
   output: 'static',
   integrations: [react(), sitemap()],
   vite: {
