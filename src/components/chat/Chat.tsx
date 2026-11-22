@@ -144,7 +144,7 @@ export default function Chat() {
         ref={listRef}
         aria-live="polite"
         aria-busy={phase !== 'idle'}
-        className="flex max-h-[420px] min-h-[260px] flex-col gap-3.5 overflow-y-auto bg-[#fcfcfd] px-[22px] py-6"
+        className="flex max-h-[420px] min-h-[260px] flex-col gap-3.5 overflow-y-auto bg-surface px-[22px] py-6"
       >
         {messages.map(({ id, ...message }) => (
           <MessageBubble key={id} {...message} />

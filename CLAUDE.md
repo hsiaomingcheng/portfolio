@@ -32,7 +32,7 @@ Chris prefers a structured, step-by-step workflow:
 | Styling | **Tailwind CSS** | Design tokens from §4 in the Tailwind theme. |
 | Interactive UI | **React**, via `@astrojs/react` | **Only** for the chat widget. Everything else is plain `.astro` components with zero client JS. |
 | Content | Astro **content collections** (Markdown) | Case studies in Markdown + typed frontmatter (§6). |
-| Fonts | **Fontsource** (self-hosted) | `@fontsource/inter` (400/500/600), `@fontsource/space-grotesk` (500/600/700), `@fontsource/jetbrains-mono` (500). No Google Fonts requests. |
+| Fonts | **Fontsource** (self-hosted) | `@fontsource/inter` (400/500/600), `@fontsource/space-grotesk` (500/600/700). No Google Fonts requests. (JetBrains Mono is installed but no longer imported.) |
 | Images | `astro:assets` `<Image />` | Auto-optimised (WebP/AVIF, sizes). |
 | SEO | `@astrojs/sitemap` | Plus per-page meta + Open Graph (§9). |
 | Hosting | **Cloudflare** (Workers static assets) | Deploy from GitHub; follow Cloudflare's Astro guide. |
@@ -73,30 +73,32 @@ Node 20+. Use npm.
 
 ### Colours
 
+Warm stone neutrals + a deep river-green accent (changed from slate + indigo in Nov 2026 so the site feels less cold).
+
 | Token | Hex | Use |
 |---|---|---|
-| `ink` | `#0F172A` | Headings, dark buttons, dark sections |
-| `body` | `#334155` | Body text |
-| `muted` | `#475569` | Secondary text, labels, placeholders |
-| `line` | `#E2E8F0` | Borders, image placeholders |
-| `line-strong` | `#CBD5E1` | Input borders, chip borders |
-| `surface` | `#F8FAFC` | Quick-facts card, decision cards |
-| `band` | `#F1F5F9` | Work section background, tags |
-| `accent` | `#4338CA` | Primary buttons, accent text, links |
-| `accent-dark` | `#312E81` | Link hover, pill text |
-| `accent-soft` | `#EEF2FF` | Status pill, featured tag |
+| `ink` | `#1F1D1A` | Headings, dark buttons, dark sections |
+| `body` | `#44403C` | Body text |
+| `muted` | `#57534E` | Secondary text, labels, placeholders |
+| `line` | `#E7E3DE` | Borders, image placeholders |
+| `line-strong` | `#D6D0C8` | Input borders, chip borders |
+| `surface` | `#FAF9F7` | Quick-facts card, decision cards |
+| `band` | `#F5F3F0` | Work section background, tags |
+| `accent` | `#1E6B63` | Primary buttons, accent text, links |
+| `accent-dark` | `#134A44` | Link hover, pill text |
+| `accent-soft` | `#E6F2EF` | Status pill, featured tag |
 | `success` | `#15803D` | "Open to work" / "Online" dot |
-| `on-dark` | `#F8FAFC` | Text on dark |
-| `on-dark-muted` | `#CBD5E1` | Secondary text on dark |
-| `on-dark-accent` | `#A5B4FC` | Labels on dark |
-| `footer-text` | `#94A3B8` | Footer text |
-| `footer-line` | `#1E293B` | Footer top border |
+| `on-dark` | `#FAF9F7` | Text on dark |
+| `on-dark-muted` | `#D6D3D1` | Secondary text on dark |
+| `on-dark-accent` | `#9FD3C7` | Labels on dark |
+| `footer-text` | `#A8A29E` | Footer text |
+| `footer-line` | `#36322E` | Footer top border |
 
 All text must meet WCAG AA contrast (4.5:1; 3:1 for ≥24px). The pairs above already pass — don't introduce lighter greys.
 
 ### Typography
 
-- **Headings:** Space Grotesk. **Body:** Inter. **Small labels:** JetBrains Mono, 13px, uppercase, `letter-spacing: 0.04em`.
+- **Headings:** Space Grotesk. **Body:** Inter. **Section labels:** Inter 15px semibold, sentence case, in `accent` (no uppercase or monospace — it read as cold/techy).
 - Base body: 17px / line-height 1.6 (case study prose 1.65).
 - H1 hero: 60px, line-height 1.05, `-0.02em`, weight 700. Case study H1: 56px.
 - H2 sections: 40px / 1.15, `-0.01em`. Contact H2: 48px. Case study H2: 32px.
@@ -121,7 +123,7 @@ All text must meet WCAG AA contrast (4.5:1; 3:1 for ≥24px). The pairs above al
 `design-reference/home.dc.html` and `design-reference/case-study-frizzell.dc.html` are exports from the approved design canvas. **Use them as the source of truth for layout, spacing and copy.**
 
 They are in a design-tool format, so translate — don't copy the runtime:
-- `{{accent}}` → the `accent` colour `#4338CA`.
+- `{{accent}}` → the `accent` colour (`#1E6B63` since the Nov 2026 warm-up; the reference files still show the old indigo/slate palette — the tokens here win).
 - `<x-dc>`, `<helmet>`, `<sc-for>`, `<sc-if>`, `<script type="text/x-dc">`, `support.js` → design-tool syntax. Ignore; rebuild as Astro components + Tailwind.
 - Inline `style="…"` values → Tailwind classes / theme tokens.
 - Grey boxes with `[Screenshot …]` / `[Your photo]` → image slots waiting for real assets (§8).

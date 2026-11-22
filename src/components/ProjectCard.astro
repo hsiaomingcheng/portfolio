@@ -25,13 +25,13 @@ const linkClass = 'py-2.5 font-semibold';
         class="block h-[180px] w-full border-b border-line bg-band object-cover object-left-top"
       />
     ) : (
-      <div class="flex h-[180px] items-center justify-center bg-line font-mono text-[13px] text-muted">
+      <div class="flex h-[180px] items-center justify-center bg-line text-[13px] text-muted">
         [Screenshot]
       </div>
     )
   }
   <div class="flex grow flex-col gap-3.5 p-7">
-    <div class="font-mono text-[13px] text-muted">{category}</div>
+    <div class="text-sm text-muted">{category}</div>
     <h3 class="m-0 font-heading text-[22px]">{cardTitle}</h3>
     <p class="m-0 text-base text-body">{summary}</p>
     <ul class="m-0 flex list-none flex-wrap gap-1.5 p-0">

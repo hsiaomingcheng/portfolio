@@ -1,4 +1,8 @@
 ---
+import { Image } from 'astro:assets';
+// Face crop of src/assets/profile.webp, so the first screen has a person on it.
+import avatar from '../assets/profile-avatar.webp';
+
 const facts = [
   { label: 'Based in', value: 'Lincoln, Canterbury, NZ' },
   { label: 'Education', value: 'Master of Applied Computing, Lincoln University' },
@@ -13,26 +17,37 @@ const facts = [
   class="mx-auto flex max-w-[1120px] flex-wrap items-center gap-14 px-6 pb-16 pt-16 md:pb-[88px] md:pt-24"
 >
   <div class="flex min-w-0 flex-[999_1_520px] flex-col gap-6">
-    <div
-      class="inline-flex items-center gap-2.5 self-start rounded-full bg-accent-soft px-3.5 py-1.5 font-mono text-[13px] text-accent-dark"
-    >
-      <span aria-hidden="true" class="size-2 rounded-full bg-success"></span>
-      Coursework complete · Open to work
+    <div class="flex items-center gap-3 sm:gap-4">
+      {/* alt is empty on purpose: the name is right next to it, and About has the described photo. */}
+      <Image
+        src={avatar}
+        alt=""
+        width={64}
+        height={64}
+        densities={[1, 2]}
+        class="size-14 shrink-0 rounded-full sm:size-16 border border-line bg-band object-cover"
+      />
+      <div class="flex flex-col gap-0.5">
+        <p class="m-0 text-lg font-semibold text-ink">Hi, I'm Chris</p>
+        <p class="m-0 flex items-center gap-2 text-sm text-accent-dark sm:text-[15px]">
+          <span aria-hidden="true" class="size-2 shrink-0 rounded-full bg-success"></span>
+          Coursework done, open to work
+        </p>
+      </div>
     </div>
 
     <h1
       id="hero-title"
       class="font-heading text-[clamp(2.5rem,6vw,3.75rem)] font-bold leading-[1.05] tracking-[-0.02em]"
     >
-      Seven years of frontend. Now building{' '}
-      <span class="text-accent">full-stack and AI-powered web apps.</span>
+      Seven years of frontend. Now building full-stack and AI-powered web apps.
     </h1>
 
     <p class="max-w-[620px] text-xl text-body">
-      I'm Chris — I spent seven years as a frontend developer in Taiwan, and I've just completed
-      the coursework for a Master of Applied Computing at Lincoln University. Most recently I redesigned and rebuilt
-      the website and online shop for an NZ agricultural electronics company, as their only IT
-      person.
+      I spent seven years as a frontend developer in Taiwan, and I've just completed the
+      coursework for a Master of Applied Computing at Lincoln University. Most recently I
+      redesigned and rebuilt the website and online shop for an NZ agricultural electronics
+      company, as their only IT person.
     </p>
 
     <div class="flex flex-wrap gap-3 pt-2">
@@ -55,7 +70,7 @@ const facts = [
     aria-label="Quick facts"
     class="flex min-w-0 flex-[1_1_300px] flex-col gap-5 rounded-2xl border border-line bg-surface p-7"
   >
-    <div class="font-mono text-[13px] uppercase tracking-[0.04em] text-muted">Quick facts</div>
+    <p class="m-0 text-[15px] font-semibold text-accent">Quick facts</p>
     <dl class="m-0 flex flex-col gap-5">
       {facts.map((fact) => (
         <div class="flex flex-col gap-1">
