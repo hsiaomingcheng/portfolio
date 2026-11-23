@@ -100,5 +100,17 @@ const chatbotApi = ((import.meta.env.PUBLIC_CHATBOT_API_URL as string | undefine
       <slot />
     </main>
     <Footer />
+    {
+      /* Cloudflare Web Analytics: cookie-free page-view counts. Production only, so local
+         development doesn't send visits. The token is public by design. */
+      import.meta.env.PROD && (
+        <script
+          is:inline
+          type="module"
+          src="https://static.cloudflareinsights.com/beacon.min.js"
+          data-cf-beacon='{"token": "56f27deae13741c581aa6b27d8075ad6"}'
+        />
+      )
+    }
   </body>
 </html>
